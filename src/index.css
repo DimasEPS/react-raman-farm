@@ -2,7 +2,8 @@
 
 @theme {
   --color-bg: oklch(0.958 0.100454 101.3636);
-  --color-secondary: oklch(0.7146 0.184278 51.7879);
+  --color-primary: oklch(0.7146 0.184278 51.7879);
+  --color-dark-green: oklch(0.4313 0.1341 141.8);
 }
 
 @font-face {
@@ -21,6 +22,13 @@
 
 @font-face {
   font-family: 'Poppins';
+  src: url('assets/fonts/Poppins-Italic.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Poppins';
   src: url('assets/fonts/Poppins-Medium.ttf') format('truetype');
   font-weight: 500;
   font-style: normal;
@@ -31,6 +39,13 @@
   src: url('assets/fonts/Poppins-Bold.ttf') format('truetype');
   font-weight: 700;
   font-style: normal;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('assets/fonts/Poppins-BoldItalic.ttf') format('truetype');
+  font-weight: 700;
+  font-style: italic;
 }
 
 :root {
@@ -68,23 +83,22 @@ h1 {
   line-height: 1.1;
 }
 
+input {
+  border: none;
+  outline: none;
+}
+
 button {
   border-radius: 8px;
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
   font-size: 1em;
   font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
   cursor: pointer;
   transition: border-color 0.25s;
 }
 button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  opacity: 0.8;
 }
 
 @media (prefers-color-scheme: light) {

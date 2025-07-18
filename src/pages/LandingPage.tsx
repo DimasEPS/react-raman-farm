@@ -1,6 +1,10 @@
+import { useState } from "react"
 import bg from "../assets/landing-bg.png"
+import SearchBar from "../components/SearchBar"
 
 export default function LandingPage() {
+  const [searchValue, setSearchValue] = useState("")
+
   return (
     <div 
       className="w-full min-h-[384px] max-h-[600px] relative bg-cover bg-center"
@@ -8,6 +12,20 @@ export default function LandingPage() {
         backgroundImage: `url(${bg})`
       }}
     >
+      <div className={`
+        flex flex-col gap-4 absolute top-[30%] items-center justify-center
+        text-white w-[80%] left-1/2 -translate-x-1/2
+      `}>
+        <b className="italic">CARI DATA KAMBING</b>
+        <SearchBar 
+          placeholder="Masukkan Nomor Induk Kambing"
+          value={searchValue}
+          setValue={setSearchValue}
+        />
+        <button className="bg-dark-green">
+          Cari Data
+        </button>
+      </div>
       <div 
         className="w-full bg-bg absolute top-[90%]"
         style={{
@@ -58,7 +76,7 @@ function Mission({
         <div
           // bg size = text size * 2 
           className={`
-            text-xl font-medium rounded-full size-[2.5rem] bg-secondary text-[rgba(0,0,0,60)]
+            text-xl font-medium rounded-full size-[2.5rem] bg-primary text-[rgba(0,0,0,60)]
             flex items-center justify-center  
           `}
         >
