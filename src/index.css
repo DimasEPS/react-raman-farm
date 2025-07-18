@@ -1,7 +1,8 @@
 @import 'tailwindcss';
 
 @theme {
-
+  --color-bg: oklch(0.958 0.100454 101.3636);
+  --color-secondary: oklch(0.7146 0.184278 51.7879);
 }
 
 @font-face {
