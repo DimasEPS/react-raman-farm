@@ -4,6 +4,10 @@
   --color-bg: oklch(0.958 0.100454 101.3636);
   --color-primary: oklch(0.7146 0.184278 51.7879);
   --color-dark-green: oklch(0.4313 0.1341 141.8);
+  --color-charcoal: oklch(0.2478 0 0);
+  --color-white-bone: oklch(0.9551 0 0);
+  --color-blue: oklch(0.6048 0.216559 257.2136);
+  --color-vivid-red: oklch(0.5915 0.202 21.24); 
 }
 
 @font-face {
@@ -32,6 +36,13 @@
   src: url('assets/fonts/Poppins-Medium.ttf') format('truetype');
   font-weight: 500;
   font-style: normal;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('assets/fonts/Poppins-MediumItalic.ttf') format('truetype');
+  font-weight: 500;
+  font-style: italic;
 }
 
 @font-face {
