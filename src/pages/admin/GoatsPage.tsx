@@ -9,17 +9,17 @@ export default function GoatsPage() {
   const goats: Array<Data> = [
     {
       code: "goat1",
-      birthDate: new Date(now.getFullYear() - 2, now.getMonth()),
+      birthDate: new Date(now.getFullYear() - 2, now.getMonth() - 2),
       currentWeight: 12
     },
     {
       code: "goat2",
-      birthDate: new Date(now.getFullYear() - 1, now.getMonth()),
+      birthDate: new Date(now.getFullYear() - 1, now.getMonth() + 8),
       currentWeight: 8
     },
     {
       code: "goat3",
-      birthDate: new Date(now.getFullYear() - 2, now.getMonth()),
+      birthDate: new Date(now.getFullYear() - 3, now.getMonth()),
       currentWeight: 24
     },
   ]
@@ -54,34 +54,41 @@ function Card({
   birthDate,
   currentWeight
 }: Data) {
- return (
-  <div className="flex flex-col px-5 py-4 gap-4 bg-white rounded-2xl">
-    <b>{code}</b>
-    <div className="flex flex-col gap-2">
-      <span>Usia Kambing  : {calculateAge(birthDate)}</span>
-      <span>Berat Kambing : {Number(currentWeight.toFixed(1))}</span>
+  const { year, month } = calculateAge(birthDate)
+
+  return (
+    <div className="flex flex-col px-5 py-4 gap-4 bg-white rounded-2xl shadow-md">
+      <b>{code}</b>
+      <div className="flex flex-col gap-2">
+        <span>Usia Kambing  : {year > 0 && `${year} tahun`} {month > 0 && `${month} bulan`}</span>
+        <span>Berat Kambing : {Number(currentWeight.toFixed(1))}</span>
+      </div>
+      <div className="flex gap-4 text-white">
+        <button className="bg-blue">Edit</button>
+        <button className="bg-vivid-red">Hapus</button>
+      </div>
     </div>
-    <div className="flex gap-4 text-white">
-      <button className="bg-blue">Edit</button>
-      <button className="bg-vivid-red">Hapus</button>
-    </div>
-  </div>
- )
+  )
 }
 
 type Data = Pick<Goat, "code" | "birthDate" | "currentWeight">
 
-function calculateAge(birthDate: Date): number {
-  const today = new Date();
-  let age = today.getFullYear() - birthDate.getFullYear();
-  
-  const hasHadBirthdayThisYear =
-    today.getMonth() > birthDate.getMonth() ||
-    (today.getMonth() === birthDate.getMonth() && today.getDate() >= birthDate.getDate());
+function calculateAge(birthDate: Date): {
+  year: number
+  month: number
+} {
+  const today = new Date()
+  let year = today.getFullYear() - birthDate.getFullYear()
+  let month = today.getMonth() - birthDate.getMonth()
 
-  if (!hasHadBirthdayThisYear) {
-    age--;
+  if (today.getDate() < birthDate.getDate() && month === 0) {
+    month--
   }
 
-  return age;
+  if (month < 0) {
+    year--
+    month += 12
+  }
+
+  return { year, month }
 }
