@@ -1,4 +1,5 @@
 import Header from "./components/Header";
+import GoatFormPage from "./pages/admin/GoatFormPage";
 import GoatsPage from "./pages/admin/GoatsPage";
 import LandingPage from "./pages/LandingPage";
 
@@ -10,6 +11,7 @@ export default function App() {
     //   </div>
     //   <Header />
     // </div>
-    <GoatsPage />
+    // <GoatsPage />
+    <GoatFormPage />
   );
 }

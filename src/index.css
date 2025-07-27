@@ -7,7 +7,10 @@
   --color-charcoal: oklch(0.2478 0 0);
   --color-white-bone: oklch(0.9551 0 0);
   --color-blue: oklch(0.6048 0.216559 257.2136);
-  --color-vivid-red: oklch(0.5915 0.202 21.24); 
+  --color-vivid-red: oklch(0.5915 0.202 21.24);
+  --color-dark-green: oklch(0.4313 0.1341 141.8);
+  --color-light-gray: oklch(0.8853 0 0);
+  --color-green: oklch(0.5198 0.176858 142.4953); 
 }
 
 @font-face {

@@ -4,18 +4,18 @@ export type Goat = {
   gender: Gender
   race: string
   healthCondition: HealthCondition
-  currentWeight: number
+  currentWeight: string
   lastWeighInDate: Date
   grade: string
   buck: string
   buckRace: string
   doeRace: string
   birthType: BirthType
-  birthWeight: number
+  birthWeight: string
   birthDate: Date
   releaseDate: Date
 }
 
 type Gender = "Jantan" | "Betina"
-type HealthCondition = "Sehat" | ""
+type HealthCondition = "Sehat" | "Sakit"
 type BirthType = "Tunggal" | ""
