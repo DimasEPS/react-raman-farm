@@ -1,5 +1,4 @@
 import { useEffect, useState, type JSX } from "react";
-import AdminLayout from "../../layouts/AdminLayout";
 import Detail from "../../assets/detail.svg?react"
 import ChevronDown from "../../assets/chevron-down.svg?react"
 import HeartBeat from "../../assets/heart-beat.svg?react"
@@ -20,7 +19,7 @@ export default function GoatFormPage() {
   const [birthDate, setBirthDate] = useState("")
   const [releaseDate, setReleaseDate] = useState("")
   
-  return <AdminLayout>
+  return (
     <div className="flex flex-col gap-8 pb-14">
       <Section
         icon={c => <Detail className={c} />}
@@ -136,7 +135,7 @@ export default function GoatFormPage() {
         </>
       </Column>
     </div>
-  </AdminLayout>
+  )
 }
 
 const dateFieldPlaceholder = "bb/hh/tttt, contoh: 01/27/2025" 

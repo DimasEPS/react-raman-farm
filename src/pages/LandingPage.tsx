@@ -1,54 +1,60 @@
 import { useState } from "react"
 import bg from "../assets/landing-bg.png"
 import SearchBar from "../components/SearchBar"
+import Header from "../components/Header"
 
 export default function LandingPage() {
   const [searchValue, setSearchValue] = useState("")
 
   return (
-    <div 
-      className="w-full min-h-[384px] max-h-[600px] relative bg-cover bg-center"
-      style={{ 
-        backgroundImage: `url(${bg})`
-      }}
-    >
-      <div className={`
-        flex flex-col gap-4 absolute top-[30%] items-center justify-center
-        text-white w-[80%] left-1/2 -translate-x-1/2
-      `}>
-        <b className="italic">CARI DATA KAMBING</b>
-        <SearchBar 
-          placeholder="Masukkan Nomor Induk Kambing"
-          value={searchValue}
-          setValue={setSearchValue}
-        />
-        <button className="bg-dark-green">
-          Cari Data
-        </button>
-      </div>
-      <div 
-        className="w-full bg-bg absolute top-[90%]"
-        style={{
-          // adjust first param (h radius) based on its content height
-          clipPath: "ellipse(120% 100% at 50% 100%)"
-        }}
-      >
-        <div className="flex flex-col gap-6 pt-6 items-center w-[90%] mx-auto">
-          <b className="text-2xl sm:text-3xl">Misi Kami</b>
-          <span className="text-center">
-            Data kambing - domba yang jelas akan meningkatkan kredibilitas peternakan anda
-          </span>
-          <div className="flex flex-col gap-4 w-full">
-            {missions.map((d, i) => (
-              <Mission 
-                number={i + 1}
-                title={d.title}
-                desc={d.desc}
-              />
-            ))}
+    <div className="relative">
+      <div className="absolute top-0 left-0 w-full h-full">
+        <div 
+          className="w-full min-h-[384px] max-h-[600px] relative bg-cover bg-center"
+          style={{ 
+            backgroundImage: `url(${bg})`
+          }}
+        >
+          <div className={`
+            flex flex-col gap-4 absolute top-[30%] items-center justify-center
+            text-white w-[80%] left-1/2 -translate-x-1/2
+          `}>
+            <b className="italic">CARI DATA KAMBING</b>
+            <SearchBar 
+              placeholder="Masukkan Nomor Induk Kambing"
+              value={searchValue}
+              setValue={setSearchValue}
+            />
+            <button className="bg-dark-green">
+              Cari Data
+            </button>
           </div>
-        </div>  
+          <div 
+            className="w-full bg-bg absolute top-[90%]"
+            style={{
+              // adjust first param (h radius) based on its content height
+              clipPath: "ellipse(120% 100% at 50% 100%)"
+            }}
+          >
+            <div className="flex flex-col gap-6 pt-6 items-center w-[90%] mx-auto">
+              <b className="text-2xl sm:text-3xl">Misi Kami</b>
+              <span className="text-center">
+                Data kambing - domba yang jelas akan meningkatkan kredibilitas peternakan anda
+              </span>
+              <div className="flex flex-col gap-4 w-full">
+                {missions.map((d, i) => (
+                  <Mission 
+                    number={i + 1}
+                    title={d.title}
+                    desc={d.desc}
+                  />
+                ))}
+              </div>
+            </div>  
+          </div>
+        </div>
       </div>
+      <Header />
     </div>
   )
 }

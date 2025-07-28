@@ -1,8 +1,8 @@
-import { useState, type JSX } from "react"
+import type { JSX } from "react"
 import Data from "../assets/admin-data.svg?react"
 import Add from "../assets/admin-tambah.svg?react"
-import Statistic from "../assets/admin-statisik.svg?react"
 import Account from "../assets/admin-akun.svg?react"
+import { useLocation, useNavigate } from "react-router-dom"
 
 export default function AdminLayout({
   children
@@ -32,9 +32,9 @@ function Header() {
   )
 }
 
-// TODO use Context
 function NavBar() {
-  const [currentMenu, setCurrentMenu] = useState<Menu>("data")
+  const navigate = useNavigate()
+  const { pathname } = useLocation()
 
   return (
     <div className={`
@@ -45,10 +45,12 @@ function NavBar() {
         menus.map(m => (
           <div 
             className={`
-              select-none cursor-pointer ${currentMenu === m.name ? "text-primary" : "text-white"}
+              select-none cursor-pointer ${pathname === m.name ? "text-primary" : "text-white"}
               transition-colors duration-400
             `}
-            onClick={() => setCurrentMenu(m.name)}
+            onClick={() => {
+              navigate(m.name)
+            }}
           >
             {m.icon}
           </div>
@@ -58,26 +60,22 @@ function NavBar() {
   )
 }
 
-type Menu = "data" | "tambah" | "statistik" | "akun"
+type Menu = "/admin" | "/admin/form" | "/admin/akun"
 
 const menus: Array<{ 
   name: Menu
   icon: JSX.Element
 }> = [
   {
-    name: "data",
+    name: "/admin",
     icon: <Data />
   },
   {
-    name: "tambah",
+    name: "/admin/form",
     icon: <Add />
   },
   {
-    name: "statistik",
-    icon: <Statistic />
-  },
-  {
-    name: "akun",
+    name: "/admin/akun",
     icon: <Account />
   }
 ] 

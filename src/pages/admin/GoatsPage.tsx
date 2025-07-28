@@ -1,6 +1,5 @@
 import { useState } from "react";
 import SearchBar from "../../components/SearchBar";
-import AdminLayout from "../../layouts/AdminLayout";
 import type { Goat } from "../../models/Goat";
 
 export default function GoatsPage() {
@@ -10,21 +9,21 @@ export default function GoatsPage() {
     {
       code: "goat1",
       birthDate: new Date(now.getFullYear() - 2, now.getMonth() - 2),
-      currentWeight: 12
+      currentWeight: "12"
     },
     {
       code: "goat2",
       birthDate: new Date(now.getFullYear() - 1, now.getMonth() + 8),
-      currentWeight: 8
+      currentWeight: "8"
     },
     {
       code: "goat3",
       birthDate: new Date(now.getFullYear() - 3, now.getMonth()),
-      currentWeight: 24
+      currentWeight: "24"
     },
   ]
 
-  return <AdminLayout>
+  return (
     <div className="size-full flex flex-col gap-4 pb-2">
       <div>
         <i className="font-medium ps-2">Cari data kambing</i>
@@ -46,7 +45,7 @@ export default function GoatsPage() {
       }
       <div className="min-h-[1px] w-full" />
     </div>
-  </AdminLayout>
+  )
 }
 
 function Card({
@@ -61,7 +60,7 @@ function Card({
       <b>{code}</b>
       <div className="flex flex-col gap-2">
         <span>Usia Kambing  : {year > 0 && `${year} tahun`} {month > 0 && `${month} bulan`}</span>
-        <span>Berat Kambing : {Number(currentWeight.toFixed(1))}</span>
+        <span>Berat Kambing : {currentWeight}</span>
       </div>
       <div className="flex gap-4 text-white">
         <button className="bg-blue">Edit</button>
