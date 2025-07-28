@@ -2,11 +2,15 @@ import { useState } from "react"
 import bg from "../assets/landing-bg.png"
 import SearchBar from "../components/SearchBar"
 import Header from "../components/Header"
+import { Navigate } from "react-router-dom"
 
 export default function LandingPage() {
   const [searchValue, setSearchValue] = useState("")
+  // change later
+  const isAdmin = false
 
-  return (
+  if (isAdmin) return <Navigate to="/admin" />
+  else return (
     <div className="relative">
       <div className="absolute top-0 left-0 w-full h-full">
         <div 

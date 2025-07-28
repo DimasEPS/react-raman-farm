@@ -6,6 +6,7 @@ import LandingPage from './pages/LandingPage.tsx'
 import GoatsPage from './pages/admin/GoatsPage.tsx'
 import GoatFormPage from './pages/admin/GoatFormPage.tsx'
 import AdminLayout from './layouts/AdminLayout.tsx'
+import AdminGuard from './components/admin/AdminGuard.tsx'
 
 const router = createBrowserRouter([
   {
@@ -14,9 +15,9 @@ const router = createBrowserRouter([
   },
   {
     path: "/admin",
-    element: <AdminLayout>
-      <Outlet />
-    </AdminLayout>,
+    element: <AdminGuard>
+      <AdminLayout />
+    </AdminGuard>,
     children: [
       {
         path: "",

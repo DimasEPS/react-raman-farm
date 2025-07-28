@@ -2,18 +2,14 @@ import type { JSX } from "react"
 import Data from "../assets/admin-data.svg?react"
 import Add from "../assets/admin-tambah.svg?react"
 import Account from "../assets/admin-akun.svg?react"
-import { useLocation, useNavigate } from "react-router-dom"
+import { Outlet, useLocation, useNavigate } from "react-router-dom"
 
-export default function AdminLayout({
-  children
-}: {
-  children: JSX.Element
-}) {
+export default function AdminLayout() {
   return (
     <div className="w-full h-[100dvh] flex flex-col relative bg-white-bone">
       <Header />
       <div className="size-full px-4 overflow-y-auto pt-6 mb-[60px]">
-        {children}
+        <Outlet />
       </div>
       <NavBar />
     </div>
