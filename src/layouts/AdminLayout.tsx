@@ -56,7 +56,7 @@ function NavBar() {
   )
 }
 
-type Menu = "/admin" | "/admin/form" | "/admin/akun"
+type Menu = "/admin" | "/admin/form" | "/admin/profil"
 
 const menus: Array<{ 
   name: Menu
@@ -71,7 +71,7 @@ const menus: Array<{
     icon: <Add />
   },
   {
-    name: "/admin/akun",
+    name: "/admin/profil",
     icon: <Account />
   }
 ] 

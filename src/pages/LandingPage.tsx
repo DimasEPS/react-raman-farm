@@ -7,7 +7,7 @@ import { Navigate } from "react-router-dom"
 export default function LandingPage() {
   const [searchValue, setSearchValue] = useState("")
   // change later
-  const isAdmin = false
+  const isAdmin = true
 
   if (isAdmin) return <Navigate to="/admin" />
   else return (

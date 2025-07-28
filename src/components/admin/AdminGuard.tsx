@@ -7,7 +7,7 @@ export default function AdminGuard({
   children: JSX.Element
 }) {
   // change later
-  const isAdmin = false
+  const isAdmin = true
 
   if (!isAdmin) return <Navigate to="/" replace />
   else return children

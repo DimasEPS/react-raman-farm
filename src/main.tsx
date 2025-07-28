@@ -7,6 +7,7 @@ import GoatsPage from './pages/admin/GoatsPage.tsx'
 import GoatFormPage from './pages/admin/GoatFormPage.tsx'
 import AdminLayout from './layouts/AdminLayout.tsx'
 import AdminGuard from './components/admin/AdminGuard.tsx'
+import ProfilePage from './pages/admin/ProfilePage.tsx'
 
 const router = createBrowserRouter([
   {
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
       {
         path: "form",
         element: <GoatFormPage />
+      },
+      {
+        path: "profil",
+        element: <ProfilePage />
       }
     ]
   }
