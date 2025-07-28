@@ -14,6 +14,7 @@ export type Goat = {
   birthWeight: string
   birthDate: Date
   releaseDate: Date
+  notes?: string
 }
 
 type Gender = "Jantan" | "Betina"

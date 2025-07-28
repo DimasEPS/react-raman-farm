@@ -4,20 +4,24 @@ import ChevronDown from "../../assets/chevron-down.svg?react"
 import HeartBeat from "../../assets/heart-beat.svg?react"
 import DataFile from "../../assets/data-file.svg?react"
 import Calendar from "../../assets/calendar.svg?react"
+import { useLocation } from "react-router-dom"
 
 export default function GoatFormPage() {
-  const [goatCode, setGoatCode] = useState("")
-  const [gender, setGender] = useState("")
-  const [race, setRace] = useState("")
-  const [healthCondition, setHealthCondition] = useState("")
-  const [currentWeight, setCurrentWeight] = useState("")
-  const [grade, setGrade] = useState("")
-  const [buckRace, setBuckRace] = useState("")
-  const [doeRace, setDoeRace] = useState("")
-  const [birthType, setBirthType] = useState("")
-  const [birthWeight, setBirthWeight] = useState("")
-  const [birthDate, setBirthDate] = useState("")
-  const [releaseDate, setReleaseDate] = useState("")
+  const location = useLocation()
+  const data = location.state?.data
+  const [code, setCode] = useState(data?.code || "")
+  const [gender, setGender] = useState(data?.gender || "")
+  const [race, setRace] = useState(data?.race || "")
+  const [healthCondition, setHealthCondition] = useState(data?.healthCondition || "")
+  const [currentWeight, setCurrentWeight] = useState(data?.currentWeight || "")
+  const [lastWeighInDate, setLastWeighInDate] = useState(formatDateString(data?.lastWeighInDate))
+  const [grade, setGrade] = useState(data?.grade || "")
+  const [buckRace, setBuckRace] = useState(data?.buckRace || "")
+  const [doeRace, setDoeRace] = useState(data?.doeRace || "")
+  const [birthType, setBirthType] = useState(data?.birthType || "")
+  const [birthWeight, setBirthWeight] = useState(data?.birthWeight || "")
+  const [birthDate, setBirthDate] = useState(formatDateString(data?.birthDate))
+  const [releaseDate, setReleaseDate] = useState(formatDateString(data?.releaseDate))
   
   return (
     <div className="flex flex-col gap-8 pb-14">
@@ -29,8 +33,8 @@ export default function GoatFormPage() {
           <>
             <TextField 
               label="Kode/Nama Kambing"
-              value={goatCode}
-              setValue={setGoatCode}
+              value={code}
+              setValue={setCode}
             />
             <ComboBox 
               label="Jenis Kelamin"
@@ -70,8 +74,8 @@ export default function GoatFormPage() {
             />
             <TextField 
               label="Tanggal Timbang Terkini"
-              value={currentWeight}
-              setValue={setCurrentWeight}
+              value={lastWeighInDate}
+              setValue={setLastWeighInDate}
               placeholder={dateFieldPlaceholder}
               trailingIcon={s => <Calendar className={s} />}
             />
@@ -129,13 +133,24 @@ export default function GoatFormPage() {
               `}
             />
           </div>
-          <button className="bg-green text-white w-[70%]">
-            Simpan Data
-          </button>
+          {
+            !data ? <button className="bg-green text-white w-[70%]">
+              Simpan Data
+            </button> : <div className="flex gap-4 w-full">
+              <button className="bg-vivid-red text-white flex-1/2">Hapus</button>
+              <button className="bg-dark-green text-white flex-1/2">Generate QR</button>
+            </div> 
+          }
         </>
       </Column>
     </div>
   )
+}
+
+function formatDateString(value: string | undefined): string {
+  if (!value) return ""
+  const date = typeof value === "string" ? new Date(value) : value
+  return !isNaN(date.getTime()) ? date.toLocaleDateString() : ""
 }
 
 const dateFieldPlaceholder = "bb/hh/tttt, contoh: 01/27/2025" 
