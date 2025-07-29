@@ -7,7 +7,7 @@ import { Navigate } from "react-router-dom"
 export default function LandingPage() {
   const [searchValue, setSearchValue] = useState("")
   // change later
-  const isAdmin = true
+  const isAdmin = false
 
   if (isAdmin) return <Navigate to="/admin" />
   else return (
@@ -45,7 +45,7 @@ export default function LandingPage() {
               <span className="text-center">
                 Data kambing - domba yang jelas akan meningkatkan kredibilitas peternakan anda
               </span>
-              <div className="flex flex-col gap-4 w-full">
+              <div className="flex flex-col gap-12 w-full">
                 {missions.map((d, i) => (
                   <Mission 
                     number={i + 1}
@@ -86,13 +86,15 @@ function Mission({
         <div
           // bg size = text size * 2 
           className={`
-            text-xl font-medium rounded-full size-[2.5rem] bg-primary text-[rgba(0,0,0,60)]
+            text-2xl font-medium rounded-full size-[3rem] bg-primary text-[rgba(0,0,0,60)]
             flex items-center justify-center  
           `}
         >
           {number}
         </div>
-        {title}
+        <h3 className="font-medium">
+          {title}
+        </h3>
       </div>
       {desc}
     </div>

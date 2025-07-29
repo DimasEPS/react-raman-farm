@@ -8,11 +8,16 @@ import GoatFormPage from './pages/admin/GoatFormPage.tsx'
 import AdminLayout from './layouts/AdminLayout.tsx'
 import AdminGuard from './components/admin/AdminGuard.tsx'
 import ProfilePage from './pages/admin/ProfilePage.tsx'
+import LoginPage from './pages/LoginPage.tsx'
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <LandingPage />
+  },
+  {
+    path: "/login",
+    element: <LoginPage />
   },
   {
     path: "/admin",

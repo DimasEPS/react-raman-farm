@@ -5,6 +5,7 @@ import HeartBeat from "../../assets/heart-beat.svg?react"
 import DataFile from "../../assets/data-file.svg?react"
 import Calendar from "../../assets/calendar.svg?react"
 import { useLocation } from "react-router-dom"
+import TextField from "../../components/TextField";
 
 export default function GoatFormPage() {
   const location = useLocation()
@@ -191,40 +192,6 @@ function Section({
         </div>
       </div>
       {children}
-    </div>
-  )
-}
-
-function TextField({
-  label,
-  value,
-  setValue,
-  placeholder,
-  trailingIcon
-}: {
-  label: string
-  value: string
-  setValue: (value: string) => void
-  placeholder?: string
-  trailingIcon?: (size: string) => JSX.Element
-}) {
-  return (
-    <div className="flex flex-col w-full">
-      {label}
-      <div className={`
-        outline-2 outline-[rgba(33,33,33,0.2)] px-4 py-2 rounded-md flex justify-between
-        gap-2 items-center
-      `}>
-        <input 
-          value={value}
-          onChange={e => setValue(e.target.value)}
-          className="w-full"
-          placeholder={placeholder}
-        />
-        {
-          trailingIcon && trailingIcon("size-[24px]")
-        }
-      </div>
     </div>
   )
 }
