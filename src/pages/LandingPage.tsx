@@ -2,14 +2,14 @@ import { useState } from "react"
 import bg from "../assets/landing-bg.png"
 import SearchBar from "../components/SearchBar"
 import Header from "../components/Header"
-import { data, Navigate, useNavigate } from "react-router-dom"
+import { Navigate, useNavigate } from "react-router-dom"
 import { mockGoats } from "../repositories/mocks/goats"
 
 export default function LandingPage() {
   const [searchValue, setSearchValue] = useState("")
   const navigate = useNavigate()
   // change later
-  const isAdmin = false
+  const isAdmin = localStorage.getItem("token")
 
   if (isAdmin) return <Navigate to="/admin" />
   else return (

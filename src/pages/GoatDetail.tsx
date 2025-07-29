@@ -18,7 +18,7 @@ export default function GoatDetail() {
         </h3>
         Data Kambing
       </div>
-      <div className="flex flex-col px-6 gap-6 w-full">
+      <div className="flex flex-col px-6 gap-6 w-full pb-16">
         <Info 
           section="DETAIL PEMILIK"
           data={new Map([

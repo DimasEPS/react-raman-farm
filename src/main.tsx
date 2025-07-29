@@ -1,7 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
-import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import LandingPage from './pages/LandingPage.tsx'
 import GoatsPage from './pages/admin/GoatsPage.tsx'
 import GoatFormPage from './pages/admin/GoatFormPage.tsx'

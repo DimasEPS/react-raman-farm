@@ -72,10 +72,15 @@ function Card({
 
 type Data = Pick<Goat, "code" | "birthDate" | "currentWeight">
 
-function calculateAge(birthDate: Date): {
+function calculateAge(birthDate: Date | undefined): {
   year: number
   month: number
 } {
+  if (!birthDate) return {
+    year: 0,
+    month: 0
+  }
+
   const today = new Date()
   let year = today.getFullYear() - birthDate.getFullYear()
   let month = today.getMonth() - birthDate.getMonth()
