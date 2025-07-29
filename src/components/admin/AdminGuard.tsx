@@ -23,11 +23,6 @@ export default function AdminGuard({
           password: string
         }
         AuthService.login(email, password)
-          .then(r => {
-            if (r.data) {
-              localStorage.setItem("token", r.data.token)
-            }
-          })
       }
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps

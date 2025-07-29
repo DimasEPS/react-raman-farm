@@ -9,23 +9,16 @@ export default function LoginPage() {
   const disabled = !email || !password
   const navigate = useNavigate()
   const onClick = () => {
-    AuthService.login(email, password)
-      .then(res => {
-        if (res && res.status == 200) {
-          localStorage.setItem("token", res.data.data.token)
-          localStorage.setItem("user", JSON.stringify({
-            ...res.data.data.user,
-            ...{ password: password }
-          }))
-          navigate("/admin", { replace: true })
-        } else {
-          navigate("/", { replace: true })
-        }
-      })
-      .catch(r => {
-        console.error(r)
+    AuthService.login(
+      email,
+      password, 
+      () => {
+        navigate("/admin", { replace: true })
+      },
+      () => {
         navigate("/", { replace: true })
-      })
+      }
+    )
   }
 
   return (
