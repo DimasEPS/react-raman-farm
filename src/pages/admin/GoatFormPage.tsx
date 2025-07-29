@@ -6,6 +6,7 @@ import DataFile from "../../assets/data-file.svg?react"
 import Calendar from "../../assets/calendar.svg?react"
 import { useLocation } from "react-router-dom"
 import TextField from "../../components/TextField";
+import formatDateString from "../../utils/formatDateString";
 
 export default function GoatFormPage() {
   const location = useLocation()
@@ -146,12 +147,6 @@ export default function GoatFormPage() {
       </Column>
     </div>
   )
-}
-
-function formatDateString(value: string | undefined): string {
-  if (!value) return ""
-  const date = typeof value === "string" ? new Date(value) : value
-  return !isNaN(date.getTime()) ? date.toLocaleDateString() : ""
 }
 
 const dateFieldPlaceholder = "bb/hh/tttt, contoh: 01/27/2025" 

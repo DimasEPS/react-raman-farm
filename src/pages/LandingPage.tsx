@@ -2,10 +2,12 @@ import { useState } from "react"
 import bg from "../assets/landing-bg.png"
 import SearchBar from "../components/SearchBar"
 import Header from "../components/Header"
-import { Navigate } from "react-router-dom"
+import { data, Navigate, useNavigate } from "react-router-dom"
+import { mockGoats } from "../repositories/mocks/goats"
 
 export default function LandingPage() {
   const [searchValue, setSearchValue] = useState("")
+  const navigate = useNavigate()
   // change later
   const isAdmin = false
 
@@ -32,9 +34,12 @@ export default function LandingPage() {
             <button className="bg-dark-green">
               Cari Data
             </button>
+            <button
+              onClick={() => navigate("/kambing", { state: { data: mockGoats[0] } })}
+            >Mock Kambing</button>
           </div>
           <div 
-            className="w-full bg-bg absolute top-[90%]"
+            className="w-full bg-bg absolute top-[90%] pb-16"
             style={{
               // adjust first param (h radius) based on its content height
               clipPath: "ellipse(120% 100% at 50% 100%)"

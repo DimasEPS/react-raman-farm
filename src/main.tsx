@@ -9,6 +9,7 @@ import AdminLayout from './layouts/AdminLayout.tsx'
 import AdminGuard from './components/admin/AdminGuard.tsx'
 import ProfilePage from './pages/admin/ProfilePage.tsx'
 import LoginPage from './pages/LoginPage.tsx'
+import GoatDetail from './pages/GoatDetail.tsx'
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <LoginPage />
+  },
+  {
+    path: "/kambing",
+    element: <GoatDetail />
   },
   {
     path: "/admin",
