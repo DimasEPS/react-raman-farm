@@ -1,4 +1,9 @@
+import { useNavigate } from "react-router-dom"
+import AuthService from "../../services/AuthService"
+
 export default function ProfilePage() {
+  const navigate = useNavigate()
+
   return (
     <div className="flex flex-col gap-4">
       <h2>Profil Admin</h2>
@@ -17,7 +22,11 @@ export default function ProfilePage() {
         />
         <button 
           className="bg-vivid-red text-white"
-          onClick={() => {}}
+          onClick={() => {
+            AuthService.logout(() => {
+              navigate("/")
+            })
+          }}
         >
           Logout
         </button>

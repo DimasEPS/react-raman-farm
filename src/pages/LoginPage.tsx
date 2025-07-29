@@ -12,9 +12,9 @@ export default function LoginPage() {
     AuthService.login(email, password)
       .then(res => {
         if (res && res.status == 200) {
-          localStorage.setItem("token", res.data.token)
+          localStorage.setItem("token", res.data.data.token)
           localStorage.setItem("user", JSON.stringify({
-            ...res.data.user,
+            ...res.data.data.user,
             ...{ password: password }
           }))
           navigate("/admin", { replace: true })
