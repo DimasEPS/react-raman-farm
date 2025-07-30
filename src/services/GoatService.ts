@@ -70,6 +70,11 @@ class GoatService {
     }
   }
 
+  async deleteGoat(id: number): Promise<boolean> {
+    const res = await httpClient.delete(`${this.basePath}/${id}`)
+    return res.status === 200
+  }
+
   private toMySQLDateTimeString(date: Date | undefined): string | null {
     if (!date) return null
 

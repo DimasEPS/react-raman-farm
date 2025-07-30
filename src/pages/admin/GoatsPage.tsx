@@ -11,6 +11,7 @@ export default function GoatsPage() {
   const [page, setPage] = useState(1)
   const [totalPage, setTotalPage] = useState(1)
   const navigate = useNavigate()
+  const [update, setUpdate] = useState(false)
 
   useEffect(() => {
     (async () => {
@@ -18,7 +19,7 @@ export default function GoatsPage() {
       setFetchGoats(res.goats)
       setTotalPage(res.totalPage)
     })()
-  }, [])
+  }, [update])
 
   return (
     <div className="size-full flex flex-col gap-4 pb-2">
@@ -47,7 +48,9 @@ export default function GoatsPage() {
                   }
                 }
               )}
-              onDelete={() => {}}
+              onDelete={async () => {
+                if (await GoatService.deleteGoat(g.id)) setUpdate(!update)
+              }}
             />
           ))
       }

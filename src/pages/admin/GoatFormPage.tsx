@@ -172,7 +172,14 @@ export default function GoatFormPage() {
             <div className="flex gap-4 w-full">
               {
                 data && <>
-                  <button className="bg-vivid-red text-white flex-1/4">Hapus</button>
+                  <button 
+                    className="bg-vivid-red text-white flex-1/4"
+                    onClick={async () => {
+                      if (await GoatService.deleteGoat(data.id)) navigate("/admin")
+                    }}
+                  >
+                      Hapus
+                  </button>
                   <button className="bg-dark-green text-white flex-2/4">Generate QR</button>
                 </>
               }
