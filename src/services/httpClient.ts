@@ -9,6 +9,13 @@ const httpClient = axios.create({
   }
 })
 
+export const authClient = axios.create({
+  baseURL: import.meta.env.VITE_BE_BASE_URL || "http://localhost:3000",
+  headers: {
+    "Content-Type": "application/json"
+  }
+})
+
 httpClient.interceptors.request.use(async c => {
   const token = localStorage.getItem("token")
   if (token) {
@@ -29,6 +36,7 @@ httpClient.interceptors.request.use(async c => {
           password
         )
         if (t) {
+          console.log("token refreshed")
           c.headers.Authorization = `Bearer ${t}`
         }
       }

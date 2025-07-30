@@ -1,4 +1,4 @@
-import httpClient from "./httpClient"
+import { authClient } from "./httpClient"
 
 class AuthService {
   private readonly basePath = "/api/auth"
@@ -8,7 +8,7 @@ class AuthService {
     password: string
   ): Promise<string | null> {
     try {
-      const res = await httpClient.post(`${this.basePath}/login`, {
+      const res = await authClient.post(`${this.basePath}/login`, {
         identifier: email,
         password: password
       })
@@ -37,7 +37,7 @@ class AuthService {
     }
     if (!token) return
     else {
-      httpClient.post(`${this.basePath}/logout`)
+      authClient.post(`${this.basePath}/logout`)
         .then(clear)
         .catch(clear)
     }
