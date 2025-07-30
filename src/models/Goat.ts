@@ -3,16 +3,16 @@ export type Goat = {
   codeName: string
   breeder?: string
   gender: string
-  race?: string
-  healthCondition?: string
-  currentWeight?: string
-  lastWeighInDate?: Date
+  breedLine?: string
+  healthStatus?: string
+  currentWeight?: number
+  weightDate?: Date
   grade?: string
   color?: string
   sireBreed?: string
   damBreed?: string
   birthType?: string
-  birthWeight?: string
+  birthWeight?: number
   birthDate?: Date
   releaseDate?: Date
   salesNotes?: string

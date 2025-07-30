@@ -1,14 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import PaginationBars from "../../components/PaginationBars";
 import SearchBar from "../../components/SearchBar";
 import type { Goat } from "../../models/Goat";
-import { mockGoats } from "../../repositories/mocks/goats";
 import GoatService from "../../services/GoatService";
-import PaginationBars from "../../components/PaginationBars";
 
 export default function GoatsPage() {
   const [searchValue, setSearchValue] = useState("")
-  const goats: Array<Goat> = mockGoats
   const [fetchGoats, setFetchGoats] = useState<Array<Goat>>([])
   const [page, setPage] = useState(1)
   const [totalPage, setTotalPage] = useState(1)
@@ -34,22 +32,24 @@ export default function GoatsPage() {
       </div>
       <hr />
       {
-        fetchGoats.map(g => (
-          <Card 
-            codeName={g.codeName}
-            birthDate={g.birthDate}
-            currentWeight={g.currentWeight}
-            onEdit={() => navigate(
-              "/admin/form",
-              {
-                state: {
-                  data: g
+        fetchGoats
+          .sort((a, b) => b.createdAt!.getTime() - a.createdAt!.getTime())
+          .map(g => (
+            <Card 
+              codeName={g.codeName}
+              birthDate={g.birthDate}
+              currentWeight={g.currentWeight}
+              onEdit={() => navigate(
+                "/admin/form",
+                {
+                  state: {
+                    data: g
+                  }
                 }
-              }
-            )}
-            onDelete={() => {}}
-          />
-        ))
+              )}
+              onDelete={() => {}}
+            />
+          ))
       }
       <PaginationBars 
         currentPage={page}
@@ -80,7 +80,7 @@ function Card({
       <div className="flex flex-col gap-2">
         <span>
           Usia Kambing  : {year > 0 && `${year} tahun`} 
-          {month > 0 && `${month} bulan`}
+          {month > 0 && ` ${month} bulan`}
           {!year && !month && "-"}
         </span>
         <span>Berat Kambing : {currentWeight ? `${currentWeight} kg` : "-"}</span>

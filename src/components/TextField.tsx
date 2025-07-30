@@ -5,17 +5,24 @@ export default function TextField({
   value,
   setValue,
   placeholder,
-  trailingIcon
+  trailingIcon,
+  required = false,
+  type = "text"
 }: {
   label: string
   value: string
   setValue: (value: string) => void
   placeholder?: string
-  trailingIcon?: (size: string) => JSX.Element
+  trailingIcon?: (size: string) => JSX.Element,
+  required?: boolean
+  type?: string
 }) {
   return (
     <div className="flex flex-col w-full">
-      {label}
+      <span>
+        {label}
+        <i className="text-vivid-red text-xs">{required && " (wajib diisi)"}</i>
+      </span>
       <div className={`
         outline-2 outline-[rgba(33,33,33,0.2)] px-4 py-2 rounded-md flex justify-between
         gap-2 items-center
@@ -25,6 +32,8 @@ export default function TextField({
           onChange={e => setValue(e.target.value)}
           className="w-full"
           placeholder={placeholder}
+          type={type}
+          step="any"
         />
         {
           trailingIcon && trailingIcon("size-[24px]")

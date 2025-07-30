@@ -25,21 +25,21 @@ export default function GoatDetail() {
             ["Kode/Nama Kambing", data.codeName],
             ["Nama Breeder", resolveUndefinedData(data.breeder)],
             ["Jenis Kelamin", data.gender],
-            ["Ras/Galur", resolveUndefinedData(data.race)]
+            ["Ras/Galur", resolveUndefinedData(data.breedLine)]
           ])}
         />
         <Info 
           section="INFORMASI KESEHATAN"
           data={new Map([
-            ["Kambing Dinyatakan", resolveUndefinedData(data.healthCondition)]
+            ["Kambing Dinyatakan", resolveUndefinedData(data.healthStatus)]
           ])}
         />
         <Info 
           section="DATA LENGKAP"
           data={new Map([
-            ["Bobot Terkini", resolveUndefinedData(data.currentWeight)],
-            ["Tanggal Timbang Terkini", resolveUndefinedData(data.currentWeight)],
-            ["Grade", resolveUndefinedData(data.currentWeight)],
+            ["Bobot Terkini", resolveUndefinedData(data.weightDate)],
+            ["Tanggal Timbang Terkini", resolveUndefinedData(data.weightDate)],
+            ["Grade", resolveUndefinedData(data.weightDate)],
             ["Warna", resolveUndefinedData(data.color)],
             ["Ras Pejantan", resolveUndefinedData(data.sireBreed)],
             ["Ras Induk", resolveUndefinedData(data.damBreed)],
