@@ -33,7 +33,7 @@ export default function GoatsPage() {
       <hr />
       {
         fetchGoats
-          .sort((a, b) => b.createdAt!.getTime() - a.createdAt!.getTime())
+          .sort((a, b) => b.updatedAt!.getTime() - a.updatedAt!.getTime())
           .map(g => (
             <Card 
               codeName={g.codeName}

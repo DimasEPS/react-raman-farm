@@ -15,6 +15,17 @@ class GoatService {
     return res.status == 201
   }
 
+  async updateGoat(id: number, newData: Omit<Goat, "id">): Promise<boolean> {
+    const filterGoat = {
+      weightDate: this.toMySQLDateTimeString(newData.weightDate),
+      birthDate: this.toMySQLDateTimeString(newData.birthDate),
+      releaseDate: this.toMySQLDateTimeString(newData.releaseDate),
+      ...newData
+    }
+    const res = await httpClient.put(`${this.basePath}/${id}`, filterGoat)
+    return res.status == 200
+  }
+
   async getGoats(
     search?: string,
     page?: number

@@ -185,25 +185,25 @@ export default function GoatFormPage() {
                 disabled={!saveEnabled}
                 onClick={async () => {
                   let success = false
-                  if (!data) {
-                    success = await GoatService.createGoat({
-                      codeName: code,
-                      gender: gender === "Jantan" ? "Male" : gender === "Betina" ? "Female" : "Male",
-                      breedLine: race,
-                      healthStatus: healthCondition,
-                      currentWeight: currentWeight ? Number(currentWeight) : undefined,
-                      weightDate: weightDate ? new Date(weightDate) : undefined,
-                      grade: grade,
-                      color: color,
-                      sireBreed: sireBreed,
-                      damBreed: damBreed,
-                      birthType: birthType,
-                      birthWeight: birthWeight ? Number(birthWeight) : undefined,
-                      birthDate: birthDate ? new Date(birthDate) : undefined,
-                      releaseDate: releaseDate ? new Date(releaseDate) : undefined,
-                      salesNotes: salesNotes
-                    })
+                  const newData = {
+                    codeName: code,
+                    gender: gender === "Jantan" ? "Male" : gender === "Betina" ? "Female" : "Male",
+                    breedLine: race,
+                    healthStatus: healthCondition,
+                    currentWeight: currentWeight ? Number(currentWeight) : undefined,
+                    weightDate: weightDate ? new Date(weightDate) : undefined,
+                    grade: grade,
+                    color: color,
+                    sireBreed: sireBreed,
+                    damBreed: damBreed,
+                    birthType: birthType,
+                    birthWeight: birthWeight ? Number(birthWeight) : undefined,
+                    birthDate: birthDate ? new Date(birthDate) : undefined,
+                    releaseDate: releaseDate ? new Date(releaseDate) : undefined,
+                    salesNotes: salesNotes
                   }
+                  if (!data) success = await GoatService.createGoat(newData)
+                    else success = await GoatService.updateGoat(data.id, newData)
                   if (success) navigate("/admin", { replace: true })
                 }}
               >
