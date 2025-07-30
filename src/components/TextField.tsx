@@ -1,3 +1,4 @@
+import type React from "react"
 import type { JSX } from "react"
 
 export default function TextField({
@@ -7,7 +8,8 @@ export default function TextField({
   placeholder,
   trailingIcon,
   required = false,
-  type = "text"
+  type = "text",
+  ref = null
 }: {
   label: string
   value: string
@@ -16,9 +18,10 @@ export default function TextField({
   trailingIcon?: (size: string) => JSX.Element,
   required?: boolean
   type?: string
+  ref?: React.RefObject<HTMLDivElement | null> | null
 }) {
   return (
-    <div className="flex flex-col w-full">
+    <div className="flex flex-col w-full" ref={ref}>
       <span>
         {label}
         <i className="text-vivid-red text-xs">{required && " (wajib diisi)"}</i>

@@ -1,4 +1,4 @@
-import { useEffect, useState, type JSX } from "react";
+import { useEffect, useRef, useState, type JSX } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Calendar from "../../assets/calendar.svg?react";
 import ChevronDown from "../../assets/chevron-down.svg?react";
@@ -45,6 +45,7 @@ export default function GoatFormPage() {
     && isValidDate(weightDate) 
     && isValidDate(birthDate) 
     && isValidDate(releaseDate)
+  const codeRef = useRef<HTMLDivElement>(null)
 
   return (
     <div className="flex flex-col gap-8 pb-14">
@@ -59,6 +60,7 @@ export default function GoatFormPage() {
               value={code}
               setValue={setCode}
               required
+              ref={codeRef}
             />
             <ComboBox 
               label="Jenis Kelamin"
@@ -226,8 +228,14 @@ export default function GoatFormPage() {
                   releaseDate: releaseDate ? new Date(releaseDate) : undefined,
                   salesNotes: salesNotes
                 }
-                if (!data) success = await GoatService.createGoat(newData)
-                  else success = await GoatService.updateGoat(data.id, newData)
+                try {
+                  if (!data) success = await GoatService.createGoat(newData)
+                    else success = await GoatService.updateGoat(data.id, newData)
+                } catch(e) {
+                  console.error(e)
+                  codeRef.current?.scrollIntoView({ behavior: "smooth" })
+                  alert("Kode kambing sudah digunakan")
+                }
                 if (success) navigate("/admin", { replace: true })
               }}
             >
