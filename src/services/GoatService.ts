@@ -70,9 +70,28 @@ class GoatService {
     }
   }
 
+  async getGoatById(id: number): Promise<Goat | null> {
+    const res = await httpClient.get(`${this.basePath}/${id}`)
+    if (res.status == 200) return res.data.data
+    else return null
+  }
+
   async deleteGoat(id: number): Promise<boolean> {
     const res = await httpClient.delete(`${this.basePath}/${id}`)
     return res.status === 200
+  }
+
+  async getGoatQr(id: number): Promise<{
+    link: string
+    qrBase64Image: string
+  } | null> {
+    const res = await httpClient.get(`${this.basePath}/${id}/qrcode`)
+    if (res) {
+      return {
+        link: res.data.link,
+        qrBase64Image: res.data.data.qrCode
+      }
+    } else return null
   }
 
   private toMySQLDateTimeString(date: Date | undefined): string | null {

@@ -1,57 +1,76 @@
-import { Navigate, useLocation } from "react-router-dom";
+import { Navigate, useLocation, useNavigate, useParams } from "react-router-dom";
 import GoatIcon from "../assets/goat.svg?react";
 import { isGoat } from "../models/Goat";
 import formatDateString from "../utils/formatDateString";
+import { useEffect, useState } from "react";
+import GoatService from "../services/GoatService";
 
 export default function GoatDetail() {
-  const data = useLocation().state?.data
+  const stateData = useLocation().state?.data 
+  const [data, setData] = useState(stateData)
+  const { id } = useParams()
+  const navigate = useNavigate()
 
-  if (!data || !isGoat(data)) return <Navigate to="/" replace />
+  useEffect(() => {
+    if (id) {
+      (async () => {
+        const res = await GoatService.getGoatById(Number(id))
+        if (res) setData(res)
+          else navigate("/")
+      })()
+    }
+  }, [])
+
+  if (!id && (!stateData || !isGoat(stateData))) return <Navigate to="/" replace />
   else return (
-    <div className="flex flex-col items-center h-[100dvh] gap-8">
-      <div className="flex items-center justify-center w-full bg-dark-green py-6">
-        <GoatIcon className="scale-110" />
-      </div>
-      <div className="text-center">
-        <h3 className="font-bold">
-          Detail Informasi
-        </h3>
-        Data Kambing
-      </div>
-      <div className="flex flex-col px-6 gap-6 w-full pb-16">
-        <Info 
-          section="DETAIL PEMILIK"
-          data={new Map([
-            ["Kode/Nama Kambing", data.codeName],
-            ["Nama Breeder", resolveUndefinedData(data.breeder)],
-            ["Jenis Kelamin", data.gender],
-            ["Ras/Galur", resolveUndefinedData(data.breedLine)]
-          ])}
-        />
-        <Info 
-          section="INFORMASI KESEHATAN"
-          data={new Map([
-            ["Kambing Dinyatakan", resolveUndefinedData(data.healthStatus)]
-          ])}
-        />
-        <Info 
-          section="DATA LENGKAP"
-          data={new Map([
-            ["Bobot Terkini", resolveUndefinedData(data.weightDate)],
-            ["Tanggal Timbang Terkini", resolveUndefinedData(data.weightDate)],
-            ["Grade", resolveUndefinedData(data.weightDate)],
-            ["Warna", resolveUndefinedData(data.color)],
-            ["Ras Pejantan", resolveUndefinedData(data.sireBreed)],
-            ["Ras Induk", resolveUndefinedData(data.damBreed)],
-            ["Kelahiran", resolveUndefinedData(data.birthType)],
-            ["Bobot Lahir", resolveUndefinedData(data.birthWeight)],
-            ["Tanggal Lahir", resolveUndefinedData(formatDateString(data.birthDate))],
-            ["Tanggal Pelepasan", resolveUndefinedData(formatDateString(data.releaseDate))],
-            ["Catatan", resolveUndefinedData(data.salesNotes)],
-          ])}
-        />
-      </div>
-    </div>
+    <>
+      {
+        data && <div className="flex flex-col items-center h-[100dvh] gap-8">
+          <div className="flex items-center justify-center w-full bg-dark-green py-6">
+            <GoatIcon className="scale-110" />
+          </div>
+          <div className="text-center">
+            <h3 className="font-bold">
+              Detail Informasi
+            </h3>
+            Data Kambing
+          </div>
+          <div className="flex flex-col px-6 gap-6 w-full pb-16">
+            <Info 
+              section="DETAIL PEMILIK"
+              data={new Map([
+                ["Kode/Nama Kambing", data.codeName],
+                ["Nama Breeder", resolveUndefinedData(data.breeder)],
+                ["Jenis Kelamin", data.gender === "Male" ? "Jantan" : data.gender === "Female" ? "Betina" : "Undefined"],
+                ["Ras/Galur", resolveUndefinedData(data.breedLine)]
+              ])}
+            />
+            <Info 
+              section="INFORMASI KESEHATAN"
+              data={new Map([
+                ["Kambing Dinyatakan", resolveUndefinedData(data.healthStatus)]
+              ])}
+            />
+            <Info 
+              section="DATA LENGKAP"
+              data={new Map([
+                ["Bobot Terkini", resolveUndefinedData(data.currentWeight)],
+                ["Tanggal Timbang Terkini", resolveUndefinedData(formatDateString(data.weightDate))],
+                ["Grade", resolveUndefinedData(data.grade)],
+                ["Warna", resolveUndefinedData(data.color)],
+                ["Ras Pejantan", resolveUndefinedData(data.sireBreed)],
+                ["Ras Induk", resolveUndefinedData(data.damBreed)],
+                ["Kelahiran", resolveUndefinedData(data.birthType)],
+                ["Bobot Lahir", resolveUndefinedData(data.birthWeight)],
+                ["Tanggal Lahir", resolveUndefinedData(formatDateString(data.birthDate))],
+                ["Tanggal Pelepasan", resolveUndefinedData(formatDateString(data.releaseDate))],
+                ["Catatan", resolveUndefinedData(data.salesNotes)],
+              ])}
+            />
+          </div>
+        </div>
+      }
+    </>
   )
 }
 

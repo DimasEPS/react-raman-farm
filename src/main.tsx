@@ -1,7 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
 import LandingPage from './pages/LandingPage.tsx'
 import GoatsPage from './pages/admin/GoatsPage.tsx'
 import GoatFormPage from './pages/admin/GoatFormPage.tsx'
@@ -25,6 +25,10 @@ const router = createBrowserRouter([
     element: <GoatDetail />
   },
   {
+    path: "/kambing/:id",
+    element: <GoatDetail />
+  },
+  {
     path: "/admin",
     element: <AdminGuard>
       <AdminLayout />
@@ -43,6 +47,10 @@ const router = createBrowserRouter([
         element: <ProfilePage />
       }
     ]
+  },
+  {
+    path: "*",
+    element: <Navigate to={"/"} replace />
   }
 ])
 

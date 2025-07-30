@@ -23,28 +23,32 @@ export type Goat = {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function isGoat(obj: any): obj is Goat {
-  const validGenders = ['Jantan', 'Betina']
-  const validHealthConditions = ['Sehat', 'Sakit']
-  const validBirthTypes = ['Tunggal', '']
+  const validGenders = ['Male', 'Female']
+  const validHealthStatuses = ['Sehat', 'Sakit']
+  const validBirthTypes = ['Tunggal']
 
   return (
     typeof obj === 'object' &&
     obj !== null &&
-    typeof obj.code === 'string' &&
+    typeof obj.id === 'number' &&
+    typeof obj.codeName === 'string' &&
     validGenders.includes(obj.gender) &&
     (obj.breeder === undefined || typeof obj.breeder === 'string') &&
-    (obj.race === undefined || typeof obj.race === 'string') &&
-    (obj.healthCondition === undefined || validHealthConditions.includes(obj.healthCondition)) &&
-    (obj.currentWeight === undefined || typeof obj.currentWeight === 'string') &&
-    (obj.lastWeighInDate === undefined || obj.lastWeighInDate instanceof Date) &&
+    (obj.breedLine === undefined || typeof obj.breedLine === 'string') &&
+    (obj.healthStatus === undefined || validHealthStatuses.includes(obj.healthStatus)) &&
+    (obj.currentWeight === undefined || typeof obj.currentWeight === 'number') &&
+    (obj.weightDate === undefined || obj.weightDate instanceof Date) &&
     (obj.grade === undefined || typeof obj.grade === 'string') &&
     (obj.color === undefined || typeof obj.color === 'string') &&
-    (obj.buckRace === undefined || typeof obj.buckRace === 'string') &&
-    (obj.doeRace === undefined || typeof obj.doeRace === 'string') &&
+    (obj.sireBreed === undefined || typeof obj.sireBreed === 'string') &&
+    (obj.damBreed === undefined || typeof obj.damBreed === 'string') &&
     (obj.birthType === undefined || validBirthTypes.includes(obj.birthType)) &&
-    (obj.birthWeight === undefined || typeof obj.birthWeight === 'string') &&
+    (obj.birthWeight === undefined || typeof obj.birthWeight === 'number') &&
     (obj.birthDate === undefined || obj.birthDate instanceof Date) &&
     (obj.releaseDate === undefined || obj.releaseDate instanceof Date) &&
-    (obj.notes === undefined || typeof obj.notes === 'string')
+    (obj.salesNotes === undefined || typeof obj.salesNotes === 'string') &&
+    (obj.createdAt === undefined || obj.createdAt instanceof Date) &&
+    (obj.updatedAt === undefined || obj.updatedAt instanceof Date) &&
+    (obj.deletedAt === undefined || obj.deletedAt instanceof Date)
   )
 }

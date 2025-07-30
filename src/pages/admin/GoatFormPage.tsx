@@ -168,61 +168,95 @@ export default function GoatFormPage() {
               onChange={e => setSalesNotes(e.target.value)}
             />
           </div>
-          {
-            <div className="flex gap-4 w-full">
-              {
-                data && <>
-                  <button 
-                    className="bg-vivid-red text-white flex-1/4"
-                    onClick={async () => {
-                      if (await GoatService.deleteGoat(data.id)) navigate("/admin")
-                    }}
-                  >
-                      Hapus
-                  </button>
-                  <button className="bg-dark-green text-white flex-2/4">Generate QR</button>
-                </>
-              }
-              <button 
-                className={`
-                  text-white w-[70%] flex-1/4 ${
-                    saveEnabled ? "bg-green" : "bg-light-gray"
-                  }  
-                `}
-                disabled={!saveEnabled}
-                onClick={async () => {
-                  let success = false
-                  const newData = {
-                    codeName: code,
-                    gender: gender === "Jantan" ? "Male" : gender === "Betina" ? "Female" : "Male",
-                    breedLine: race,
-                    healthStatus: healthCondition,
-                    currentWeight: currentWeight ? Number(currentWeight) : undefined,
-                    weightDate: weightDate ? new Date(weightDate) : undefined,
-                    grade: grade,
-                    color: color,
-                    sireBreed: sireBreed,
-                    damBreed: damBreed,
-                    birthType: birthType,
-                    birthWeight: birthWeight ? Number(birthWeight) : undefined,
-                    birthDate: birthDate ? new Date(birthDate) : undefined,
-                    releaseDate: releaseDate ? new Date(releaseDate) : undefined,
-                    salesNotes: salesNotes
-                  }
-                  if (!data) success = await GoatService.createGoat(newData)
-                    else success = await GoatService.updateGoat(data.id, newData)
-                  if (success) navigate("/admin", { replace: true })
-                }}
-              >
-                Simpan Data
-              </button>
-            </div> 
-          }
+          <div className="flex gap-4 w-full">
+            {
+              data && <>
+                <button 
+                  className="bg-vivid-red text-white flex-1/4"
+                  onClick={async () => {
+                    if (await GoatService.deleteGoat(data.id)) navigate("/admin")
+                  }}
+                >
+                    Hapus
+                </button>
+                <button 
+                  className="bg-blue text-white flex-2/4"
+                  onClick={async () => {
+                    if (data) {
+                      const res = await GoatService.getGoatQr(data.id)
+                      if (res) {
+                        const resized = await resizeImage(res.qrBase64Image)
+                        const link = document.createElement('a')
+                        link.href = resized
+                        link.download = `${data.codeName}-qrCode.png`
+                        document.body.appendChild(link)
+                        link.click()
+                        document.body.removeChild(link)
+                      }
+                    }
+                  }}
+                >
+                  Download QR
+                </button>
+              </>
+            }
+            <button 
+              className={`
+                text-white w-[70%] flex-1/4 ${
+                  saveEnabled ? "bg-green" : "bg-light-gray"
+                }  
+              `}
+              disabled={!saveEnabled}
+              onClick={async () => {
+                let success = false
+                const newData = {
+                  codeName: code,
+                  gender: gender === "Jantan" ? "Male" : gender === "Betina" ? "Female" : "Male",
+                  breedLine: race,
+                  healthStatus: healthCondition,
+                  currentWeight: currentWeight ? Number(currentWeight) : undefined,
+                  weightDate: weightDate ? new Date(weightDate) : undefined,
+                  grade: grade,
+                  color: color,
+                  sireBreed: sireBreed,
+                  damBreed: damBreed,
+                  birthType: birthType,
+                  birthWeight: birthWeight ? Number(birthWeight) : undefined,
+                  birthDate: birthDate ? new Date(birthDate) : undefined,
+                  releaseDate: releaseDate ? new Date(releaseDate) : undefined,
+                  salesNotes: salesNotes
+                }
+                if (!data) success = await GoatService.createGoat(newData)
+                  else success = await GoatService.updateGoat(data.id, newData)
+                if (success) navigate("/admin", { replace: true })
+              }}
+            >
+              Simpan Data
+            </button>
+          </div>
         </>
       </Column>
     </div>
   )
 }
+
+const resizeImage = async (url: string, scale = 3): Promise<string> => {
+  const img = new Image()
+  img.crossOrigin = 'anonymous'
+  img.src = url
+
+  await new Promise((resolve) => (img.onload = resolve))
+
+  const canvas = document.createElement('canvas')
+  canvas.width = img.width * scale
+  canvas.height = img.height * scale
+
+  const ctx = canvas.getContext('2d')
+  ctx?.drawImage(img, 0, 0, canvas.width, canvas.height)
+
+  return canvas.toDataURL('image/png')
+}
+
 
 function isValidDate(dateStr: string): boolean {
   if (!dateStr) return true
