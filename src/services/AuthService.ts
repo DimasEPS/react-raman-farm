@@ -5,44 +5,41 @@ class AuthService {
 
   async login(
     email: string, 
-    password: string, 
-    onSuccess?: () => void, 
-    onFail?: () => void
-  ) {
-    httpClient.post(`${this.basePath}/login`, {
-      identifier: email,
-      password: password
-    })
-     .then(res => {
-        if (res && res.status == 200) {
-          localStorage.setItem("token", res.data.data.token)
-          localStorage.setItem("user", JSON.stringify({
-            ...res.data.data.user,
-            ...{ password: password }
-          }))
-          onSuccess?.()
-        } else {
-          onFail?.()
-        }
+    password: string
+  ): Promise<string | null> {
+    try {
+      const res = await httpClient.post(`${this.basePath}/login`, {
+        identifier: email,
+        password: password
       })
-      .catch(r => {
-        console.error(r)
-        onFail?.()
-      })
+
+      if (res && res.status == 200) {
+        const token = res.data.data.token
+        localStorage.setItem("token", token)
+        localStorage.setItem("user", JSON.stringify({
+          ...res.data.data.user,
+          ...{ password: password }
+        }))
+        return token
+      } else return null
+    } catch (e) {
+      console.error(e)
+      return null
+    }
   }
 
   logout(onSuccess: () => void | undefined) {
     const token = localStorage.getItem("token")
+    const clear = () => {
+      localStorage.removeItem("token")
+      localStorage.removeItem("user")
+      onSuccess()
+    }
     if (!token) return
     else {
       httpClient.post(`${this.basePath}/logout`)
-        .then(r => {
-          if (r.status === 200) {
-            localStorage.removeItem("token")
-            localStorage.removeItem("user")
-            onSuccess()
-          }
-        })
+        .then(clear)
+        .catch(clear)
     }
   }
 }

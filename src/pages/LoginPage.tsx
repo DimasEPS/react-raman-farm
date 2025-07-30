@@ -8,17 +8,13 @@ export default function LoginPage() {
   const [password, setPassword] = useState("")
   const disabled = !email || !password
   const navigate = useNavigate()
-  const onClick = () => {
-    AuthService.login(
+  const onClick = async () => {
+    const t = await AuthService.login(
       email,
-      password, 
-      () => {
-        navigate("/admin", { replace: true })
-      },
-      () => {
-        navigate("/", { replace: true })
-      }
+      password
     )
+    if (t) navigate("/admin", { replace: true })
+    else navigate("/", { replace: true }) 
   }
 
   return (

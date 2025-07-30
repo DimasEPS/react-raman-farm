@@ -1,21 +1,24 @@
 export type Goat = {
-  code: string
+  id: number
+  codeName: string
   breeder?: string
-  gender: Gender
+  gender: string
   race?: string
-  healthCondition?: HealthCondition
+  healthCondition?: string
   currentWeight?: string
   lastWeighInDate?: Date
   grade?: string
   color?: string
-  buck?: string
-  buckRace?: string
-  doeRace?: string
-  birthType?: BirthType
+  sireBreed?: string
+  damBreed?: string
+  birthType?: string
   birthWeight?: string
   birthDate?: Date
   releaseDate?: Date
-  notes?: string
+  salesNotes?: string
+  createdAt?: Date
+  updatedAt?: Date
+  deletedAt?: Date
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -36,7 +39,6 @@ export function isGoat(obj: any): obj is Goat {
     (obj.lastWeighInDate === undefined || obj.lastWeighInDate instanceof Date) &&
     (obj.grade === undefined || typeof obj.grade === 'string') &&
     (obj.color === undefined || typeof obj.color === 'string') &&
-    (obj.buck === undefined || typeof obj.buck === 'string') &&
     (obj.buckRace === undefined || typeof obj.buckRace === 'string') &&
     (obj.doeRace === undefined || typeof obj.doeRace === 'string') &&
     (obj.birthType === undefined || validBirthTypes.includes(obj.birthType)) &&
@@ -46,7 +48,3 @@ export function isGoat(obj: any): obj is Goat {
     (obj.notes === undefined || typeof obj.notes === 'string')
   )
 }
-
-type Gender = "Jantan" | "Betina"
-type HealthCondition = "Sehat" | "Sakit"
-type BirthType = "Tunggal" | ""

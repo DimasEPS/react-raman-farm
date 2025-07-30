@@ -1,6 +1,6 @@
 import { Navigate, useLocation } from "react-router-dom";
+import GoatIcon from "../assets/goat.svg?react";
 import { isGoat } from "../models/Goat";
-import GoatIcon from "../assets/goat.svg?react"
 import formatDateString from "../utils/formatDateString";
 
 export default function GoatDetail() {
@@ -22,7 +22,7 @@ export default function GoatDetail() {
         <Info 
           section="DETAIL PEMILIK"
           data={new Map([
-            ["Kode/Nama Kambing", data.code],
+            ["Kode/Nama Kambing", data.codeName],
             ["Nama Breeder", resolveUndefinedData(data.breeder)],
             ["Jenis Kelamin", data.gender],
             ["Ras/Galur", resolveUndefinedData(data.race)]
@@ -41,13 +41,13 @@ export default function GoatDetail() {
             ["Tanggal Timbang Terkini", resolveUndefinedData(data.currentWeight)],
             ["Grade", resolveUndefinedData(data.currentWeight)],
             ["Warna", resolveUndefinedData(data.color)],
-            ["Ras Pejantan", resolveUndefinedData(data.buckRace)],
-            ["Ras Induk", resolveUndefinedData(data.doeRace)],
+            ["Ras Pejantan", resolveUndefinedData(data.sireBreed)],
+            ["Ras Induk", resolveUndefinedData(data.damBreed)],
             ["Kelahiran", resolveUndefinedData(data.birthType)],
             ["Bobot Lahir", resolveUndefinedData(data.birthWeight)],
             ["Tanggal Lahir", resolveUndefinedData(formatDateString(data.birthDate))],
             ["Tanggal Pelepasan", resolveUndefinedData(formatDateString(data.releaseDate))],
-            ["Catatan", resolveUndefinedData(data.notes)],
+            ["Catatan", resolveUndefinedData(data.salesNotes)],
           ])}
         />
       </div>

@@ -9,7 +9,7 @@ const httpClient = axios.create({
   }
 })
 
-httpClient.interceptors.request.use(c => {
+httpClient.interceptors.request.use(async c => {
   const token = localStorage.getItem("token")
   if (token) {
     if (!isTokenExpired(token)) {
@@ -24,13 +24,13 @@ httpClient.interceptors.request.use(c => {
           role: string
           password: string
         }
-        AuthService.login(
+        const t = await AuthService.login(
           email,
-          password,
-          () => {
-            c.headers.Authorization = `Bearer ${localStorage.getItem("token")}`
-          }
+          password
         )
+        if (t) {
+          c.headers.Authorization = `Bearer ${t}`
+        }
       }
     }
   }

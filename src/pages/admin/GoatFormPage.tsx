@@ -11,7 +11,7 @@ import formatDateString from "../../utils/formatDateString";
 export default function GoatFormPage() {
   const location = useLocation()
   const data = location.state?.data
-  const [code, setCode] = useState(data?.code || "")
+  const [code, setCode] = useState(data?.codeName || "")
   const [gender, setGender] = useState(data?.gender || "")
   const [race, setRace] = useState(data?.race || "")
   const [healthCondition, setHealthCondition] = useState(data?.healthCondition || "")
