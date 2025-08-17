@@ -3,13 +3,38 @@ import bg from "../assets/landing-bg.png"
 import SearchBar from "../components/SearchBar"
 import Header from "../components/Header"
 import { Navigate, useNavigate } from "react-router-dom"
-import { mockGoats } from "../repositories/mocks/goats"
+import GoatService from "../services/GoatService"
 
 export default function LandingPage() {
   const [searchValue, setSearchValue] = useState("")
+  const [isSearching, setIsSearching] = useState(false)
+  const [error, setError] = useState("")
   const navigate = useNavigate()
-  // change later
   const isAdmin = localStorage.getItem("token")
+
+  const handleSearch = async () => {
+    if (!searchValue.trim()) {
+      setError("Masukkan nomor induk kambing")
+      return
+    }
+
+    setIsSearching(true)
+    setError("")
+
+    try {
+      const goat = await GoatService.getGoatByCodeName(searchValue.trim())
+      if (goat) {
+        // Navigate menggunakan ID di URL parameter, bukan state
+        navigate(`/kambing/${goat.id}`)
+      } else {
+        setError("Kambing dengan kode tersebut tidak ditemukan")
+      }
+    } catch (err) {
+      setError("Kambing dengan kode tersebut tidak ditemukan")
+    } finally {
+      setIsSearching(false)
+    }
+  }
 
   if (isAdmin) return <Navigate to="/admin" />
   else return (
@@ -31,12 +56,18 @@ export default function LandingPage() {
               value={searchValue}
               setValue={setSearchValue}
             />
-            <button className="bg-dark-green">
-              Cari Data
+            <button 
+              className="bg-dark-green px-6 py-2 rounded-lg text-white font-medium disabled:opacity-50"
+              onClick={handleSearch}
+              disabled={isSearching}
+            >
+              {isSearching ? "Mencari..." : "Cari Data"}
             </button>
-            <button
-              onClick={() => navigate("/kambing", { state: { data: mockGoats[0] } })}
-            >Mock Kambing</button>
+            {error && (
+              <div className="text-red-300 text-sm text-center">
+                {error}
+              </div>
+            )}
           </div>
           <div 
             className="w-full bg-bg absolute top-[90%] pb-16"

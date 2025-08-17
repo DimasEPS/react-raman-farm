@@ -36,7 +36,8 @@ class GoatService {
   }> {
     let goats: Array<Goat> = []
     let nextPage: number | undefined = undefined
-    let totalPage = 0
+    let totalPage = 1 // Default to 1
+    
     const queries = `?${[["search", search], ["page", page]]
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       .filter(([_, v]) => !!v)
@@ -46,7 +47,7 @@ class GoatService {
     const res = await httpClient.get(`${this.basePath}${queries}`)
     if (res.status === 200) {
       goats = res.data.data.map(g => {
-        if (g.weightDate) g.weighDate = new Date(g.weighDate)
+        if (g.weightDate) g.weightDate = new Date(g.weightDate) // Fixed typo: weighDate -> weightDate
         if (g.birthDate) g.birthDate = new Date(g.birthDate)
         if (g.releaseDate) g.releaseDate = new Date(g.releaseDate)
         if (g.createdAt) g.createdAt = new Date(g.createdAt)
@@ -55,14 +56,17 @@ class GoatService {
         
         return g
       })
+      
       const metadata = res.data.meta
-      if (!metadata.totalPage) {
-        totalPage = 1
-      }
-      if (metadata.totalPages > metadata.page) {
-        nextPage = ++metadata.page
+      // Fix: Use totalPages from backend response
+      totalPage = metadata.totalPages || 1
+      
+      // Fix: Check if there's a next page
+      if (metadata.page < metadata.totalPages) {
+        nextPage = metadata.page + 1
       }
     }
+    
     return {
       goats,
       totalPage,
@@ -92,6 +96,24 @@ class GoatService {
         qrBase64Image: res.data.data.qrCode
       }
     } else return null
+  }
+
+  async getGoatByCodeName(codeName: string): Promise<Goat | null> {
+    const res = await httpClient.get(`${this.basePath}/codename/${codeName}`)
+    if (res.status == 200) {
+      const goat = res.data.data
+      return {
+        ...goat,
+        birthDate: goat.birthDate ? new Date(goat.birthDate) : undefined,
+        weightDate: goat.weightDate ? new Date(goat.weightDate) : undefined,
+        releaseDate: goat.releaseDate ? new Date(goat.releaseDate) : undefined,
+        createdAt: goat.createdAt ? new Date(goat.createdAt) : undefined,
+        updatedAt: goat.updatedAt ? new Date(goat.updatedAt) : undefined,
+        deletedAt: goat.deletedAt ? new Date(goat.deletedAt) : undefined,
+      }
+    } else {
+      return null
+    }
   }
 
   private toMySQLDateTimeString(date: Date | undefined): string | null {

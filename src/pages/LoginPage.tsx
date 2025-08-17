@@ -30,6 +30,7 @@ export default function LoginPage() {
           />
           <TextField 
             label="Password"
+            type="password"
             value={password}
             setValue={setPassword}
             placeholder="Masukkan Password"

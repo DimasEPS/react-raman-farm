@@ -19,15 +19,24 @@ export default function GoatDetail() {
           else navigate("/")
       })()
     }
-  }, [])
+  }, [id, navigate])
 
-  if (!id && (!stateData || !isGoat(stateData))) return <Navigate to="/" replace />
-  else return (
+  const handleGoatIconClick = () => {
+    navigate("/")
+  }
+
+  // Update validation - hanya perlu check id dari params
+  if (!id) return <Navigate to="/" replace />
+  
+  return (
     <>
       {
         data && <div className="flex flex-col items-center h-[100dvh] gap-8">
           <div className="flex items-center justify-center w-full bg-dark-green py-6">
-            <GoatIcon className="scale-110" />
+            <GoatIcon 
+              className="scale-110 cursor-pointer hover:scale-125 transition-transform duration-200" 
+              onClick={handleGoatIconClick}
+            />
           </div>
           <div className="text-center">
             <h3 className="font-bold">
