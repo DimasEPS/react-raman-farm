@@ -10,149 +10,174 @@ import GoatService from "../../services/GoatService";
 import formatDateString from "../../utils/formatDateString";
 
 export default function GoatFormPage() {
-  const location = useLocation()
-  const data = location.state?.data
-  const navigate = useNavigate()
-  const [code, setCode] = useState(data?.codeName || "")
+  const location = useLocation();
+  const data = location.state?.data;
+  const navigate = useNavigate();
+  const [code, setCode] = useState(data?.codeName || "");
   const [gender, setGender] = useState(() => {
-    let g = data?.gender
+    let g = data?.gender;
     if (g) {
       switch (g) {
-        case 'Male':
-          g = "Jantan"
-          break
-        case 'Female':
-          g = "Betina"
-          break
+        case "Male":
+          g = "Jantan";
+          break;
+        case "Female":
+          g = "Betina";
+          break;
       }
     }
-    return g || ""
-  })
-  const [race, setRace] = useState(data?.breedLine || "")
-  const [healthCondition, setHealthCondition] = useState(data?.healthCondition || "")
-  const [currentWeight, setCurrentWeight] = useState(data?.currentWeight || "")
-  const [weightDate, setWeightDate] = useState(formatDateString(data?.weightDate))
-  const [grade, setGrade] = useState(data?.grade || "")
-  const [color, setColor] = useState(data?.color || "")
-  const [sireBreed, setSireBreed] = useState(data?.sireBreed || "")
-  const [damBreed, setDamBreed] = useState(data?.damBreed || "")
-  const [birthType, setBirthType] = useState(data?.birthType || "")
-  const [birthWeight, setBirthWeight] = useState(data?.birthWeight || "")
-  const [birthDate, setBirthDate] = useState(formatDateString(data?.birthDate))
-  const [releaseDate, setReleaseDate] = useState(formatDateString(data?.releaseDate))
-  const [salesNotes, setSalesNotes] = useState(data?.salesNotes || "")
-  const saveEnabled = code 
-    && isValidDate(weightDate) 
-    && isValidDate(birthDate) 
-    && isValidDate(releaseDate)
-  const codeRef = useRef<HTMLDivElement>(null)
+    return g || "";
+  });
+
+  const [earTagColor, setEarTagColor] = useState(data?.earTagColor || "");
+  const [race, setRace] = useState(data?.breedLine || "");
+  const [healthCondition, setHealthCondition] = useState(
+    data?.healthStatus || ""
+  );
+  const [vaccinationDate, setVaccinationDate] = useState(
+    formatDateString(data?.vaccinationDate)
+  );
+  const [healthNotes, setHealthNotes] = useState(data?.healthNotes || "");
+  const [vaccineType, setVaccineType] = useState(data?.vaccineType || "");
+  const [currentWeight, setCurrentWeight] = useState(data?.currentWeight || "");
+  const [weightDate, setWeightDate] = useState(
+    formatDateString(data?.weightDate)
+  );
+  const [grade, setGrade] = useState(data?.grade || "");
+  const [color, setColor] = useState(data?.color || "");
+  const [sireBreed, setSireBreed] = useState(data?.sireBreed || "");
+  const [damBreed, setDamBreed] = useState(data?.damBreed || "");
+  const [birthType, setBirthType] = useState(data?.birthType || "");
+  const [birthWeight, setBirthWeight] = useState(data?.birthWeight || "");
+  const [birthDate, setBirthDate] = useState(formatDateString(data?.birthDate));
+  const [releaseDate, setReleaseDate] = useState(
+    formatDateString(data?.releaseDate)
+  );
+  const [salesNotes, setSalesNotes] = useState(data?.salesNotes || "");
+  const saveEnabled =
+    code &&
+    isValidDate(weightDate) &&
+    isValidDate(birthDate) &&
+    isValidDate(releaseDate) &&
+    (vaccinationDate === "" || isValidDate(vaccinationDate));
+  const codeRef = useRef<HTMLDivElement>(null);
 
   return (
     <div className="flex flex-col gap-8 pb-14">
-      <Section
-        icon={c => <Detail className={c} />}
-        name="Detail Pemilik"
-      >
+      <Section icon={(c) => <Detail className={c} />} name="Detail Pemilik">
         <Column>
           <>
-            <TextField 
+            <TextField
               label="Kode/Nama Kambing"
               value={code}
               setValue={setCode}
               required
               ref={codeRef}
             />
-            <ComboBox 
+            <ComboBox
               label="Jenis Kelamin"
               options={genders}
               value={gender}
-              setValue={g => setGender(g)}
+              setValue={(g) => setGender(g)}
             />
-            <TextField 
-              label="Galur/Ras"
-              value={race}
-              setValue={setRace}
+
+            <TextField
+              label="Warna Ear Tag"
+              value={earTagColor}
+              setValue={setEarTagColor}
             />
+            <TextField label="Galur/Ras" value={race} setValue={setRace} />
           </>
         </Column>
       </Section>
       <Section
-        icon={c => <HeartBeat className={c} />}
+        icon={(c) => <HeartBeat className={c} />}
         name="Kondisi Kesehatan"
-      >
-        <ComboBox 
-          label="Kambing Dinyatakan"
-          options={healthConditions}
-          value={healthCondition}
-          setValue={setHealthCondition}
-        />
-      </Section>
-      <Section
-        icon={c => <DataFile className={c} />}
-        name="Data Lengkap"
       >
         <Column>
           <>
-            <TextField 
+            <ComboBox
+              label="Kambing Dinyatakan"
+              options={healthConditions}
+              value={healthCondition}
+              setValue={setHealthCondition}
+            />
+            <TextField
+              label="Tanggal Vaksinasi"
+              value={vaccinationDate}
+              setValue={setVaccinationDate}
+              placeholder={dateFieldPlaceholder}
+              trailingIcon={(s) => <Calendar className={s} />}
+            />
+            <TextField
+              label="Jenis Vaksin"
+              value={vaccineType}
+              setValue={setVaccineType}
+            />
+            <TextField
+              label="Catatan Kesehatan"
+              value={healthNotes}
+              setValue={setHealthNotes}
+              multiline
+            />
+          </>
+        </Column>
+      </Section>
+      <Section icon={(c) => <DataFile className={c} />} name="Data Lengkap">
+        <Column>
+          <>
+            <TextField
               label="Bobot Terkini"
               value={currentWeight}
               setValue={setCurrentWeight}
               placeholder={weightPlaceholder}
               type="number"
             />
-            <TextField 
+            <TextField
               label="Tanggal Timbang Terkini"
               value={weightDate}
               setValue={setWeightDate}
               placeholder={dateFieldPlaceholder}
-              trailingIcon={s => <Calendar className={s} />}
+              trailingIcon={(s) => <Calendar className={s} />}
             />
-            <TextField 
-              label="Grade"
-              value={grade}
-              setValue={setGrade}
-            />
-            <TextField 
-              label="Warna"
-              value={color}
-              setValue={setColor}
-            />
-            <TextField 
+            <TextField label="Grade" value={grade} setValue={setGrade} />
+            <TextField label="Warna" value={color} setValue={setColor} />
+            <TextField
               label="Ras Pejantan"
               value={sireBreed}
               setValue={setSireBreed}
             />
-            <TextField 
+            <TextField
               label="Ras Induk"
               value={damBreed}
               setValue={setDamBreed}
             />
-            <ComboBox 
+            <ComboBox
               label="Kelahiran"
               options={birthTypes}
               value={birthType}
               setValue={setBirthType}
             />
-            <TextField 
+            <TextField
               label="Bobot Kelahiran"
               value={birthWeight}
               setValue={setBirthWeight}
               placeholder={weightPlaceholder}
               type="number"
             />
-            <TextField 
+            <TextField
               label="Tanggal Kelahiran"
               value={birthDate}
               setValue={setBirthDate}
               placeholder={dateFieldPlaceholder}
-              trailingIcon={s => <Calendar className={s} />}
+              trailingIcon={(s) => <Calendar className={s} />}
             />
-            <TextField 
+            <TextField
               label="Tanggal Pelepasan"
               value={releaseDate}
               setValue={setReleaseDate}
               placeholder={dateFieldPlaceholder}
-              trailingIcon={s => <Calendar className={s} />}
+              trailingIcon={(s) => <Calendar className={s} />}
             />
           </>
         </Column>
@@ -167,33 +192,34 @@ export default function GoatFormPage() {
                 min-h-[120px] px-4 py-2
               `}
               value={salesNotes}
-              onChange={e => setSalesNotes(e.target.value)}
+              onChange={(e) => setSalesNotes(e.target.value)}
             />
           </div>
           <div className="flex gap-4 w-full">
-            {
-              data && <>
-                <button 
+            {data && (
+              <>
+                <button
                   className="bg-vivid-red text-white flex-1/4"
                   onClick={async () => {
-                    if (await GoatService.deleteGoat(data.id)) navigate("/admin")
+                    if (await GoatService.deleteGoat(data.id))
+                      navigate("/admin");
                   }}
                 >
-                    Hapus
+                  Hapus
                 </button>
-                <button 
+                <button
                   className="bg-blue text-white flex-2/4"
                   onClick={async () => {
                     if (data) {
-                      const res = await GoatService.getGoatQr(data.id)
+                      const res = await GoatService.getGoatQr(data.id);
                       if (res) {
-                        const resized = await resizeImage(res.qrBase64Image)
-                        const link = document.createElement('a')
-                        link.href = resized
-                        link.download = `${data.codeName}-qrCode.png`
-                        document.body.appendChild(link)
-                        link.click()
-                        document.body.removeChild(link)
+                        const resized = await resizeImage(res.qrBase64Image);
+                        const link = document.createElement("a");
+                        link.href = resized;
+                        link.download = `${data.codeName}-qrCode.png`;
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
                       }
                     }
                   }}
@@ -201,8 +227,8 @@ export default function GoatFormPage() {
                   Download QR
                 </button>
               </>
-            }
-            <button 
+            )}
+            <button
               className={`
                 text-white w-[70%] flex-1/4 ${
                   saveEnabled ? "bg-green" : "bg-light-gray"
@@ -210,13 +236,26 @@ export default function GoatFormPage() {
               `}
               disabled={!saveEnabled}
               onClick={async () => {
-                let success = false
+                let success = false;
                 const newData = {
                   codeName: code,
-                  gender: gender === "Jantan" ? "Male" : gender === "Betina" ? "Female" : "Male",
+                  gender:
+                    gender === "Jantan"
+                      ? "Male"
+                      : gender === "Betina"
+                      ? "Female"
+                      : "Male",
                   breedLine: race,
+                  earTagColor: earTagColor,
                   healthStatus: healthCondition,
-                  currentWeight: currentWeight ? Number(currentWeight) : undefined,
+                  vaccinationDate: vaccinationDate
+                    ? new Date(vaccinationDate)
+                    : undefined,
+                  healthNotes: healthNotes,
+                  vaccineType: vaccineType,
+                  currentWeight: currentWeight
+                    ? Number(currentWeight)
+                    : undefined,
                   weightDate: weightDate ? new Date(weightDate) : undefined,
                   grade: grade,
                   color: color,
@@ -226,17 +265,17 @@ export default function GoatFormPage() {
                   birthWeight: birthWeight ? Number(birthWeight) : undefined,
                   birthDate: birthDate ? new Date(birthDate) : undefined,
                   releaseDate: releaseDate ? new Date(releaseDate) : undefined,
-                  salesNotes: salesNotes
-                }
+                  salesNotes: salesNotes,
+                };
                 try {
-                  if (!data) success = await GoatService.createGoat(newData)
-                    else success = await GoatService.updateGoat(data.id, newData)
-                } catch(e) {
-                  console.error(e)
-                  codeRef.current?.scrollIntoView({ behavior: "smooth" })
-                  alert("Kode kambing sudah digunakan")
+                  if (!data) success = await GoatService.createGoat(newData);
+                  else success = await GoatService.updateGoat(data.id, newData);
+                } catch (e) {
+                  console.error(e);
+                  codeRef.current?.scrollIntoView({ behavior: "smooth" });
+                  alert("Kode kambing sudah digunakan");
                 }
-                if (success) navigate("/admin", { replace: true })
+                if (success) navigate("/admin", { replace: true });
               }}
             >
               Simpan Data
@@ -245,114 +284,101 @@ export default function GoatFormPage() {
         </>
       </Column>
     </div>
-  )
+  );
 }
 
 const resizeImage = async (url: string, scale = 3): Promise<string> => {
-  const img = new Image()
-  img.crossOrigin = 'anonymous'
-  img.src = url
+  const img = new Image();
+  img.crossOrigin = "anonymous";
+  img.src = url;
 
-  await new Promise((resolve) => (img.onload = resolve))
+  await new Promise((resolve) => (img.onload = resolve));
 
-  const canvas = document.createElement('canvas')
-  canvas.width = img.width * scale
-  canvas.height = img.height * scale
+  const canvas = document.createElement("canvas");
+  canvas.width = img.width * scale;
+  canvas.height = img.height * scale;
 
-  const ctx = canvas.getContext('2d')
-  ctx?.drawImage(img, 0, 0, canvas.width, canvas.height)
+  const ctx = canvas.getContext("2d");
+  ctx?.drawImage(img, 0, 0, canvas.width, canvas.height);
 
-  return canvas.toDataURL('image/png')
-}
-
+  return canvas.toDataURL("image/png");
+};
 
 function isValidDate(dateStr: string): boolean {
-  if (!dateStr) return true
+  if (!dateStr) return true;
 
-  const dateRegex = /^(0?[1-9]|1[0-2])\/(0?[1-9]|[12][0-9]|3[01])\/(\d{4})$/
-  const match = dateStr.match(dateRegex)
-  if (!match) return false
+  const dateRegex = /^(0?[1-9]|1[0-2])\/(0?[1-9]|[12][0-9]|3[01])\/(\d{4})$/;
+  const match = dateStr.match(dateRegex);
+  if (!match) return false;
 
-  const [month, day, year] = dateStr.split("/").map(Number)
+  const [month, day, year] = dateStr.split("/").map(Number);
 
-  if (year < 1000 || year > 9999) return false
+  if (year < 1000 || year > 9999) return false;
 
-  const date = new Date(year, month - 1, day)
+  const date = new Date(year, month - 1, day);
 
   return (
     date.getFullYear() === year &&
     date.getMonth() === month - 1 &&
     date.getDate() === day
-  )
+  );
 }
 
-const dateFieldPlaceholder = "bb/hh/tttt, contoh: 01/27/2025" 
-const weightPlaceholder = "kg, contoh: 2.4" 
-const genders = ["Jantan", "Betina"]
-const healthConditions = ["Sehat", "Sakit"]
-const birthTypes = ["Tunggal"]
+const dateFieldPlaceholder = "bb/hh/tttt, contoh: 01/27/2025";
+const weightPlaceholder = "kg, contoh: 2.4";
+const genders = ["Jantan", "Betina"];
+const healthConditions = ["Sehat", "Sakit"];
+const birthTypes = ["Tunggal"];
 
-function Column({
-  children
-}: {
-  children: JSX.Element
-}) {
-  return (
-    <div className="flex flex-col gap-2 items-center">
-      {children}
-    </div>
-  )
+function Column({ children }: { children: JSX.Element }) {
+  return <div className="flex flex-col gap-2 items-center">{children}</div>;
 }
 
 function Section({
   icon,
   name,
-  children
+  children,
 }: {
-  icon: (iconClassName: string) => JSX.Element
-  name: string
-  children: JSX.Element
+  icon: (iconClassName: string) => JSX.Element;
+  name: string;
+  children: JSX.Element;
 }) {
   return (
     <div className="flex flex-col gap-2">
       <div className="flex items-center gap-2">
-        <div className="text-dark-green">
-          {icon("size-[32px]")}
-        </div>
-        <div className="font-medium text-xl">
-          {name}
-        </div>
+        <div className="text-dark-green">{icon("size-[32px]")}</div>
+        <div className="font-medium text-xl">{name}</div>
       </div>
       {children}
     </div>
-  )
+  );
 }
 
 function ComboBox({
   label,
   options,
   value,
-  setValue
+  setValue,
 }: {
-  label: string
-  options: Array<string>
-  value: string
-  setValue: (value: string) => void
+  label: string;
+  options: Array<string>;
+  value: string;
+  setValue: (value: string) => void;
 }) {
-  const [expand, setExpand] = useState(false)
+  const [expand, setExpand] = useState(false);
 
   useEffect(() => {
     if (options.length && !value) {
-      setValue(options[0])
+      setValue(options[0]);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="relative w-full">
       <div className="">
         {label}
-        <div 
+        <div
           className={`
             outline-2 outline-[rgba(33,33,33,0.2)] bg-light-gray rounded-md 
             flex justify-between items-center px-4 py-2
@@ -363,25 +389,25 @@ function ComboBox({
           {<ChevronDown className="size-[24px]" />}
         </div>
       </div>
-      {
-        expand && <div className={`
+      {expand && (
+        <div
+          className={`
           absolute top-full flex flex-col gap-4 bg-light-gray rounded-[4px]
           outline-2 outline-[rgba(33,33,33,0.2)] px-4 py-2 mt-2 w-full
-        `}>
-          {
-            options.map(o => (
-              <div
-                onClick={() => {
-                  setValue(o)
-                  setExpand(false)
-                }}
-              >
-                {o}
-              </div>
-            ))
-          }
+        `}
+        >
+          {options.map((o) => (
+            <div
+              onClick={() => {
+                setValue(o);
+                setExpand(false);
+              }}
+            >
+              {o}
+            </div>
+          ))}
         </div>
-      }
+      )}
     </div>
-  )
+  );
 }
