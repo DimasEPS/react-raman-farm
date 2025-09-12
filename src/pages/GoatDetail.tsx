@@ -5,7 +5,7 @@ import {
   useParams,
 } from "react-router-dom";
 import GoatIcon from "../assets/goat.svg?react";
-import { isGoat } from "../models/Goat";
+// import { isGoat } from "../models/Goat";
 import formatDateString from "../utils/formatDateString";
 import { useEffect, useState } from "react";
 import GoatService from "../services/GoatService";
