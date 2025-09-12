@@ -24,7 +24,6 @@ export default function LandingPage() {
     try {
       const goat = await GoatService.getGoatByCodeName(searchValue.trim());
       if (goat) {
-        // Navigate menggunakan ID di URL parameter, bukan state
         navigate(`/kambing/${goat.id}`);
       } else {
         setError("Kambing dengan kode tersebut tidak ditemukan");
@@ -79,11 +78,13 @@ export default function LandingPage() {
               }}
             >
               <div className="flex flex-col gap-6 pt-6 items-center w-[90%] mx-auto">
-                <b className="text-2xl sm:text-3xl">Misi Kami</b>
+                <b className="text-2xl sm:text-3xl">Visi Kami</b>
                 <span className="text-center">
-                  Data kambing - domba yang jelas akan meningkatkan kredibilitas
-                  peternakan anda
+                  "Menjadi koperasi produsen yang mampu memproduksi dan atau
+                  menampung hasil produksi anggota yang selanjutnya
+                  mendistribusikan ke dalam provinsi maupun luar provinsi"
                 </span>
+                <b className="text-2xl sm:text-3xl mt-6">Misi Kami</b>
                 <div className="flex flex-col gap-12 w-full">
                   {missions.map((d, i) => (
                     <Mission number={i + 1} title={d.title} desc={d.desc} />
@@ -100,32 +101,35 @@ export default function LandingPage() {
 
 const missions: Array<MissionData> = [
   {
-    title: "Sanad",
+    title: "Memproduksi Barang Yang Bersaing Tinggi Dan Berkualitas",
   },
   {
-    title: "Pertumbuhan",
+    title:
+      "Menyediakan Peralatan Dan Bahan-Bahan Yang Dibutuhkan Anggota Untuk Memproduksi Barang",
   },
   {
-    title: "Kesehatan",
+    title:
+      "Menampung Hasil Produksi Anggota Yang Selanjutnya Dilakukan Penyempurnaan Dan Mendistribusikannya",
   },
 ];
 
 function Mission({ number, title, desc }: MissionData) {
   return (
-    <div className="flex flex-col gap-2">
-      <div className="flex gap-4 items-center">
+    <div className="flex flex-col gap-2 w-full">
+      <div className="flex gap-3 sm:gap-4 items-center">
         <div
-          // bg size = text size * 2
           className={`
-            text-2xl font-medium rounded-full size-[3rem] bg-primary text-[rgba(0,0,0,60)]
-            flex items-center justify-center  
+            text-xl sm:text-2xl font-medium rounded-full size-[2.5rem] sm:size-[3rem] bg-primary text-[rgba(0,0,0,60)]
+            flex items-center justify-center shrink-0
           `}
         >
           {number}
         </div>
-        <h3 className="font-medium">{title}</h3>
+        <h4 className="font-medium text-sm sm:text-base md:text-lg">{title}</h4>
       </div>
-      {desc}
+      <div className="text-xs sm:text-sm md:text-base pl-[2.5rem] sm:pl-[3rem]">
+        {desc}
+      </div>
     </div>
   );
 }
