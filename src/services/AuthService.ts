@@ -1,7 +1,7 @@
 import { authClient } from "./httpClient"
 
 class AuthService {
-  private readonly basePath = "/api/auth"
+  private readonly basePath = "/auth"
 
   async login(
     email: string, 

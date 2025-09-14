@@ -2,7 +2,7 @@ import type { Goat } from "../models/Goat";
 import httpClient from "./httpClient";
 
 class GoatService {
-  private readonly basePath = "/api/goat";
+  private readonly basePath = "/goat";
 
   async createGoat(goat: Omit<Goat, "id">): Promise<boolean> {
     const filterGoat = {
