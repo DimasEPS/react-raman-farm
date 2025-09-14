@@ -4,6 +4,8 @@ import SearchBar from "../components/SearchBar";
 import Header from "../components/Header";
 import { Navigate, useNavigate } from "react-router-dom";
 import GoatService from "../services/GoatService";
+import logoUnila from "../assets/unila.png";
+import logoYufeed from "../assets/yufeed.jpg";
 
 export default function LandingPage() {
   const [searchValue, setSearchValue] = useState("");
@@ -71,13 +73,25 @@ export default function LandingPage() {
               )}
             </div>
             <div
-              className="w-full bg-bg absolute top-[90%] pb-16"
+              className=" w-full bg-bg absolute top-[90%] pb-16"
               style={{
                 // adjust first param (h radius) based on its content height
                 clipPath: "ellipse(120% 100% at 50% 100%)",
               }}
             >
               <div className="flex flex-col gap-6 pt-6 items-center w-[90%] mx-auto">
+                <div className="flex justify-center items-center gap-2 mb-4 ">
+                  <img
+                    src={logoUnila}
+                    alt="Logo Universitas Lampung"
+                    className="h-16 sm:h-20 object-contain rounded-full"
+                  />
+                  <img
+                    src={logoYufeed}
+                    alt="Logo Yufeed"
+                    className="h-12 sm:h-16 object-contain rounded-full mr-10"
+                  />
+                </div>
                 <b className="text-2xl sm:text-3xl">Visi Kami</b>
                 <span className="text-center">
                   "Menjadi koperasi produsen yang mampu memproduksi dan atau
